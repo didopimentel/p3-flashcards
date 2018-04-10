@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Platform, TextInput } from 'r
 import { red, gray } from '../utils/colors'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
+import { saveDeckTitle } from '../utils/api'
 
 
 class NewDeck extends Component {
@@ -19,6 +20,7 @@ class NewDeck extends Component {
 
   submit = () => {
     const deckTitle  = this.state.inputText
+
     this.props.dispatch(addDeck({
       [deckTitle]:
       {
@@ -26,6 +28,9 @@ class NewDeck extends Component {
         questions: []
       }
     }))
+
+    saveDeckTitle(deckTitle)
+
   }
 
   render(){
@@ -59,6 +64,7 @@ const styles = StyleSheet.create({
   },
   title: {
     justifyContent: 'center',
+    textAlign: 'center',
     fontSize: 40
   },
   box: {

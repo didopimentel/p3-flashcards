@@ -4,7 +4,7 @@ export const DECK_STORAGE_KEY = 'Flashcards:decks'
 
 export function getDecks () {
   return AsyncStorage.getItem(DECK_STORAGE_KEY)
-                     .then(decks => {return decks === null ? {} : JSON.parse(decks)})
+                     .then(decks => JSON.parse(decks))
 }
 
 export function getDeck (name) {
@@ -12,17 +12,20 @@ export function getDeck (name) {
                      .then(decks => decks.filter(current => current.name != name))
 }
 
-export function saveDeckTitle ({ entry, name }) {
+export function saveDeckTitle (name) {
   return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
-    [name]: entry
+    [name]: {
+      title: name,
+      questions: []
+    }
   }))
 }
 
-export function addCardToDeck ({ deckName, card }) {
+export function addCardToDeck (title, card) {
   AsyncStorage.getItem(DECK_STORAGE_KEY, (err, result) => {
     if (result) {
       var newDeck = JSON.parse(result)
-      newDeck[deckName].questions = newDeck[deckName].questions.concat(card)
+      newDeck[title].questions = newDeck[title].questions.concat(card)
       AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(newDeck))
     }
   })
