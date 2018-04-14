@@ -48,7 +48,8 @@ class NewCard extends Component {
       card
     ))
     addCardToDeck(title, card)
-    navigation.dispatch(NavigationActions.back({key: navigation.state.params.key}))
+    navigation.pop()
+    //navigation.dispatch(NavigationActions.back({key: navigation.state.params.key}))
 
   }
 
@@ -60,7 +61,7 @@ class NewCard extends Component {
             style={styles.inputBox}
             onChangeText={(text) => this.questionHandler(text)}
             placeholder='Write your question here'
-            underlineColorAndroid={gray}
+            underlineColorAndroid='rgba(0,0,0,0)'
             placeholderTextColor={gray}
             value={this.state.question}
           />
@@ -68,7 +69,7 @@ class NewCard extends Component {
             style={styles.inputBox}
             onChangeText={(text) => this.answerHandler(text)}
             placeholder='Write your answer here'
-            underlineColorAndroid={gray}
+            underlineColorAndroid='rgba(0,0,0,0)'
             placeholderTextColor={gray}
             value={this.state.answer}
           />
@@ -96,15 +97,13 @@ const styles = StyleSheet.create({
     marginTop: 50
   },
   inputBox: {
-    borderRadius: 10,
+    borderRadius: 5,
     borderColor: black,
-    borderWidth: 2,
-    paddingLeft: 40,
-    width: 370,
-    paddingRight: 40,
-    paddingTop: 5,
-    paddingBottom: 5,
-    margin: 10
+    borderWidth: 1,
+    paddingLeft: 20,
+    width: 300,
+    height: 30,
+    margin: 15
   },
   buttonContainer: {
     flex: 1,

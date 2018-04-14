@@ -11,6 +11,7 @@ import { red, white } from './utils/colors'
 import { createStore } from 'redux'
 import reducer from './reducers'
 import { Provider } from 'react-redux'
+import { setLocalNotification } from './utils/helpers'
 
 const Tabs = TabNavigator({
   History: {
@@ -63,6 +64,11 @@ const MainNavigator = StackNavigator({
 })
 
 export default class App extends React.Component {
+
+  componentDidMount () {
+    setLocalNotification()
+  }
+
   render() {
     return (
       <Provider store={createStore(reducer)}>

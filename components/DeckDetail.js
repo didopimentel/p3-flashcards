@@ -24,7 +24,9 @@ class DeckDetail extends Component {
 
   navigateToQuiz() {
     const { navigation } = this.props
-    const { deck } = navigation.state.params
+    const { deck } = (this.props.deck === undefined)
+                          ? this.props.navigation.state.params
+                          : this.props
     navigation.navigate(
       'Quiz',
       { deck }
@@ -32,7 +34,9 @@ class DeckDetail extends Component {
   }
 
   render() {
-    const { deck } = this.props.navigation.state.params
+    const { deck } = (this.props.deck === undefined)
+                          ? this.props.navigation.state.params
+                          : this.props
     return (
       <View style={styles.container}>
         <View style={styles.description}>
@@ -93,7 +97,7 @@ function mapStateToProps(state, ownProps) {
     const deck = state[key]
     return deck
   }).filter((deck) => (deck.title === ownProps.navigation.state.params.deck.title))
-  return {}
+  return {deck: newDeck[0]}
 }
 
 export default connect(mapStateToProps)(DeckDetail)

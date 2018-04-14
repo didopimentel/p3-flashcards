@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Platform, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { getDecks } from '../utils/api'
 import { receiveDecks } from '../actions'
 import { white, green, gray } from '../utils/colors'
 import DeckRow from './DeckRow'
+import { AsyncStorage } from 'react-native'
+
+const NOTIFICATION_KEY = 'Flashcards:notifications'
 
 class Decks extends Component {
 
@@ -42,7 +45,7 @@ class Decks extends Component {
       )
     }
     return(
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
        {Object.keys(decks).map((key) => {
          const deck = decks[key]
          return(
@@ -52,7 +55,7 @@ class Decks extends Component {
               key={key}
            />
        )})}
-      </View>
+      </ScrollView>
     )
   }
 }

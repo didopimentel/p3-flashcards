@@ -9,7 +9,7 @@ import { saveDeckTitle } from '../utils/api'
 class NewDeck extends Component {
 
   state = {
-    inputText: 'text'
+    inputText: ''
   }
 
   textHandler (text) {
@@ -20,16 +20,21 @@ class NewDeck extends Component {
 
   submit = () => {
     const deckTitle  = this.state.inputText
-
-    this.props.dispatch(addDeck({
-      [deckTitle]:
-      {
+    const deck = {
         title: deckTitle,
         questions: []
       }
+    
+    this.props.dispatch(addDeck({
+      [deckTitle]: deck
     }))
 
     saveDeckTitle(deckTitle)
+
+    this.props.navigation.navigate(
+      'DeckDetail',
+      { deck }
+    )
 
   }
 
@@ -40,7 +45,9 @@ class NewDeck extends Component {
         <TextInput
           onChangeText={(text) => this.textHandler(text)}
           value={this.state.inputText}
+          placeholder='Write the deck name'
           style={styles.box}
+          underlineColorAndroid='rgba(0,0,0,0)'
         />
         <TouchableOpacity
           style={styles.button}
@@ -74,6 +81,7 @@ const styles = StyleSheet.create({
     margin: 15,
     fontSize: 15,
     width: 200,
+    paddingLeft: 20,
     height: 30,
     borderWidth: 1
   },

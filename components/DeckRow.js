@@ -15,9 +15,10 @@ class DeckRow extends Component {
               'DeckDetail',
               { deck }
             )}
-            style={styles.deckInfo}>
-              <Text style={{fontSize: 22}}> {deck.title} </Text>
-              <Text style={{color: gray}}> {deck.questions.length} cards </Text>
+            style={styles.deckInfo}
+          >
+              <Text style={[styles.centralizeText, {fontSize: 22}]}> {deck.title} </Text>
+              <Text style={[styles.centralizeText, {color: gray}]}> {deck.questions.length} cards </Text>
           </TouchableOpacity>
         </View>
       )
@@ -33,8 +34,12 @@ const styles = StyleSheet.create({
     height: 150
   },
   deckInfo: {
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center'
+  },
+  centralizeText: {
+    textAlign: 'center'
   }
 })
 

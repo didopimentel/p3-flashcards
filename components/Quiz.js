@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native'
 import { green, red } from '../utils/colors'
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
 class Quiz extends Component {
 
@@ -15,7 +16,8 @@ class Quiz extends Component {
   state = {
     currentQuestion: 0,
     score: 0,
-    answered: false
+    answered: false,
+    bounceValue: new Animated.Value(1)
   }
 
   activateAnswer() {
@@ -37,17 +39,76 @@ class Quiz extends Component {
     })
   }
 
+  navigateToQuiz() {
+    //const { navigation } = this.props
+    //const { deck } = navigation.state.params
+    /*navigation.navigate(
+      'Quiz',
+      { deck }
+    )*/
+    this.setState({
+      currentQuestion: 0,
+      score: 0,
+      answered:false
+    })
+
+  }
+
+  navigateToDeck() {
+    const { navigation } = this.props
+    const { deck } = navigation.state.params
+    /*navigation.navigate(
+      'DeckDetail',
+      { deck }
+    )*/
+    navigation.pop()
+  }
+
   render() {
     const { deck } = this.props.navigation.state.params
     const numOfQuestions = deck.questions.length
-    const { currentQuestion, score, answered } = this.state
+    const { currentQuestion, score, answered, bounceValue } = this.state
+    const quizScore = score/numOfQuestions * 100
 
-    if(currentQuestion == numOfQuestions) {
-      return(
+    if (numOfQuestions == 0) {
+      return (
+        <View style={styles.container}>
+          <View style={styles.noCardsContainer}>
+            <Text style={{textAlign:'center'}}> You do not have any cards yet. </Text>
+          </View>
+        </View>
+      )
+    }
+
+    if (currentQuestion == numOfQuestions) {
+
+      Animated.sequence([
+        Animated.timing(bounceValue, { duration: 100, toValue: 1.1 }),
+        Animated.spring(bounceValue, { toValue: 1, friction: 4 })
+      ]).start()
+
+      clearLocalNotification()
+        .then(setLocalNotification).then(console.log())
+
+      return (
         <View style={styles.container}>
           <View style={styles.finalContainer}>
-            <Text style={styles.finalText}> You finished the test!</Text>
-            <Text>Your score: {score/numOfQuestions * 100}%</Text>
+            <Animated.Text style={[styles.finalText, {transform: [{scale: bounceValue}]}]}> You finished the test!</Animated.Text>
+            <Animated.Text style={{transform: [{scale: bounceValue}]}}>Your score: {quizScore.toFixed(3)}%</Animated.Text>
+          </View>
+          <View style={styles.buttonBox}>
+            <TouchableOpacity
+              style={[styles.button, {backgroundColor: green}]}
+              onPress={() => this.navigateToQuiz()}
+            >
+              <Text>Restart Quiz</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, {backgroundColor: red}]}
+              onPress={() => this.navigateToDeck()}
+            >
+              <Text>Back to Deck</Text>
+            </TouchableOpacity>
           </View>
         </View>
       )
@@ -87,7 +148,7 @@ class Quiz extends Component {
 
 const Answer = ({ onPress }) => (
   <TouchableOpacity onPress={onPress}>
-    <Text style={{color: red}}>Answer</Text>
+    <Text style={{color: red}}>Show Answer</Text>
   </TouchableOpacity>
 )
 
@@ -129,6 +190,11 @@ const styles = StyleSheet.create({
   finalText: {
     color: red,
     fontSize: 30
+  },
+  noCardsContainer: {
+    paddingTop: 200,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 
