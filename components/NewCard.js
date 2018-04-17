@@ -43,7 +43,8 @@ class NewCard extends Component {
       answer: this.state.answer
     }
 
-    if (card.question !== '' and card.answer !== '') {
+    if (card.question !== '' && card.answer !== '') {
+
       this.props.dispatch(addCard(
         title,
         card
