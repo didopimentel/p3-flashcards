@@ -14,7 +14,7 @@ class Quiz extends Component {
   }
 
   state = {
-    currentQuestion: 0,
+    currentQuestion: 1,
     score: 0,
     answered: false,
     bounceValue: new Animated.Value(1)
@@ -29,13 +29,15 @@ class Quiz extends Component {
   submitCorrect() {
     this.setState({
       score: this.state.score+1,
-      currentQuestion: this.state.currentQuestion+1
+      currentQuestion: this.state.currentQuestion+1,
+      answered: false
     })
   }
 
   submitIncorrect() {
     this.setState({
-      currentQuestion: this.state.currentQuestion+1
+      currentQuestion: this.state.currentQuestion+1,
+      answered: false
     })
   }
 
@@ -47,7 +49,7 @@ class Quiz extends Component {
       { deck }
     )*/
     this.setState({
-      currentQuestion: 0,
+      currentQuestion: 1,
       score: 0,
       answered:false
     })

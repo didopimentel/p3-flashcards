@@ -24,17 +24,19 @@ class NewDeck extends Component {
         title: deckTitle,
         questions: []
       }
-    
-    this.props.dispatch(addDeck({
-      [deckTitle]: deck
-    }))
 
-    saveDeckTitle(deckTitle)
+    if (deck.title !== '') {
+      this.props.dispatch(addDeck({
+        [deckTitle]: deck
+      }))
 
-    this.props.navigation.navigate(
-      'DeckDetail',
-      { deck }
-    )
+      saveDeckTitle(deckTitle)
+  
+      this.props.navigation.navigate(
+        'DeckDetail',
+        { deck }
+      )
+    }
 
   }
 

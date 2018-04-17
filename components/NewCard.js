@@ -43,13 +43,16 @@ class NewCard extends Component {
       answer: this.state.answer
     }
 
-    this.props.dispatch(addCard(
-      title,
-      card
-    ))
-    addCardToDeck(title, card)
-    navigation.pop()
-    //navigation.dispatch(NavigationActions.back({key: navigation.state.params.key}))
+    if (card.question !== '' and card.answer !== '') {
+      this.props.dispatch(addCard(
+        title,
+        card
+      ))
+      addCardToDeck(title, card)
+      navigation.pop()
+      //navigation.dispatch(NavigationActions.back({key: navigation.state.params.key}))
+
+    }
 
   }
 
