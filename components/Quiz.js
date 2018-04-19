@@ -14,7 +14,7 @@ class Quiz extends Component {
   }
 
   state = {
-    currentQuestion: 1,
+    currentQuestion: 0,
     score: 0,
     answered: false,
     bounceValue: new Animated.Value(1)
@@ -49,7 +49,7 @@ class Quiz extends Component {
       { deck }
     )*/
     this.setState({
-      currentQuestion: 1,
+      currentQuestion: 0,
       score: 0,
       answered:false
     })
@@ -119,7 +119,7 @@ class Quiz extends Component {
     return(
       <View style={styles.container}>
         <View style={styles.questionCounterBox}>
-          <Text>{currentQuestion} / {numOfQuestions} </Text>
+          <Text>{currentQuestion+1} / {numOfQuestions} </Text>
         </View>
         <View style={styles.questionBox}>
           <Text style={styles.question}>

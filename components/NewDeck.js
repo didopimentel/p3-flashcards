@@ -25,13 +25,13 @@ class NewDeck extends Component {
         questions: []
       }
 
-    if (deck.title !== '') {
+    if (deck.title.trim() !== '') {
       this.props.dispatch(addDeck({
         [deckTitle]: deck
       }))
 
       saveDeckTitle(deckTitle)
-  
+
       this.props.navigation.navigate(
         'DeckDetail',
         { deck }
