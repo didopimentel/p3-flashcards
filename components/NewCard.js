@@ -43,7 +43,7 @@ class NewCard extends Component {
       answer: this.state.answer
     }
 
-    if (card.question.trim() !== '' || card.answer.trim() !== '') {
+    if (card.question.trim() !== '' && card.answer.trim() !== '') {
 
       this.props.dispatch(addCard(
         title,
