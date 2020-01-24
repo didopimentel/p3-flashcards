@@ -1,3 +1,7 @@
+# Flashcards
+
+This is a React Native application that was made for a Udacity nanodegree course. It simulates a quiz card game, where you can register the cards with a question and a hidden answer. It also comes with a everyday notification system to remind you that it is time to make a quiz!
+
 ## Table of Contents
 
 * [Devices tested](#devices-tested)
